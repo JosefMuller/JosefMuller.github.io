@@ -67,6 +67,7 @@ const store = new Vuex.Store({
 
 ``` js
 // meta（title、icon、open、close）：用于导航菜单的自动生成（参数会传入 svg.vue 组件使用）
+// meta（markdown）:用于指定markdown的文件路径，通过路由配置定义列表
 
 export default [{
     path: "/home",
@@ -78,21 +79,42 @@ export default [{
 }, {
     path: "/tools",
     component: () => import("@/layout/DoubleColumn"),
-    children: [],
     meta: {
         title: "工具",
         open: "folder_open",
         close: "folder_close"
-    }
+    },
+    children: [{
+        path: "FolderToJson",
+        components: {
+            aside: () => import("@/pages/Tools/Aside"),
+            content: () => import("@/pages/Tools/FolderToJson")
+        },
+        meta: {
+            title: "文件目录生成",
+            file: "file"
+        }
+    }]
 }, {
     path: "/learning",
     component: () => import("@/layout/DoubleColumn"),
-    children: [],
     meta: {
         title: "教程",
         open: "folder_open",
         close: "folder_close"
-    }
+    },
+    children: [{
+        path: "Introduction",
+        components: {
+            aside: () => import("@/pages/Learning/Aside"),
+            content: () => import("@/pages/Learning/Markdown")
+        },
+        meta: {
+            title: "作品简介",
+            file: "file",
+            markdown: "Introduction.md"
+        }
+    }]
 }];
 ```
 
@@ -129,6 +151,22 @@ router.beforeEach(async (to, from, next) => {
 })
 ```
 
+## Markdown 组件
+
+``` html
+<template>
+    <section class="MarkdownConfig YetAnotherGithub" v-html="markdown"></section>
+</template>
+```
+
+``` js
+computed: {
+    markdown() {
+        return this.readMarkdownFile(this.$route.meta.markdown)
+    },
+},
+```
+
 ## vue-directive
 
 1. index.js（自动导入全局指令）
@@ -144,7 +182,7 @@ export default {
 }
 ```
 
-3. 应用
+2. 示例
 
 ``` html
 <!-- v-emoji：限制可输入字符 -->
