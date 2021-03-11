@@ -99,22 +99,16 @@ export default [{
     path: "/learning",
     component: () => import("@/layout/DoubleColumn"),
     meta: {
-        title: "教程",
+        title: "Markdown",
         open: "folder_open",
         close: "folder_close"
     },
     children: [{
-        path: "Introduction",
+        path: "",
         components: {
-            aside: () => import("@/pages/Learning/Aside"),
-            content: () => import("@/pages/Learning/Markdown")
-        },
-        meta: {
-            title: "作品简介",
-            file: "file",
-            markdown: "Introduction.md"
+            aside: () => import("@/pages/Learning/Aside")
         }
-    }]
+    }, ...markdown] // 自动配置 markdown 相关路由
 }];
 ```
 
@@ -272,7 +266,6 @@ img {
 
 ``` scss
 // flex.scss
-
 .set-flex {
     display: flex;
 
@@ -314,6 +307,26 @@ img {
 
     &._end {
         align-items: flex-end;
+    }
+
+    &._self_start {
+        align-self: flex-start;
+    }
+
+    &._self_end {
+        align-self: flex-end;
+    }
+
+    &._self_center {
+        align-self: center;
+    }
+
+    &._self_baseline {
+        align-self: baseline;
+    }
+
+    &._self_stretch {
+        align-self: stretch;
     }
 }
 ```

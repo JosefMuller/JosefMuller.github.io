@@ -43,4 +43,6 @@ ol {
 
 img {
     border: 0;
+    /* 神秘的 6px */
+    vertical-align: bottom;
 }
